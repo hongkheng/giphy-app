@@ -21,7 +21,6 @@ function App() {
       const data = await fetch(
         `${GIPHY_TRENDING_API}?api_key=${GIPHY_KEY}&limit=${pageSize}&offset=${offset}`
       );
-      console.log("data", data.data);
       setGifs((prevData) => {
         return [...prevData, ...data.data];
       });
@@ -46,6 +45,8 @@ function App() {
     setPageSize(limit);
     // When a new page size load is set, reset the offset to 0
     setOffset(0);
+    // Reset the gifs array to empty
+    setGifs([]);
   };
 
   return (
