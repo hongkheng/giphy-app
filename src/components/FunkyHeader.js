@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 function FunkyHeader() {
   return (
     <header>
-      GIPHY gifs
+      <h1>GIPHY gifs</h1>
     </header>
-  )
+  );
 }
 
-export default FunkyHeader
+export default FunkyHeader;

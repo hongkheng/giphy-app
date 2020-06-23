@@ -3,7 +3,7 @@ import fetch from "./libs/fetch";
 import GIFView from "./components/GIFView";
 import FunkyHeader from "./components/FunkyHeader";
 import FeedOption from "./components/FeedOption";
-import "./App.css";
+import styles from "./App.module.css";
 
 import { GIPHY_TRENDING_API, GIPHY_KEY } from "./config";
 
@@ -13,17 +13,22 @@ function App() {
   const [pageSize, setPageSize] = useState(10);
   // Initial offset
   const [offset, setOffset] = useState(0);
+  // Set error
+  const [errorMessage, setErrorMessage] = useState();
 
   const loadGifs = async (pageSize, offset) => {
     try {
       const data = await fetch(
         `${GIPHY_TRENDING_API}?api_key=${GIPHY_KEY}&limit=${pageSize}&offset=${offset}`
       );
+      console.log("data", data.data);
       setGifs((prevData) => {
         return [...prevData, ...data.data];
       });
+      setErrorMessage(undefined);
     } catch (error) {
       console.log("something bad happened", error);
+      setErrorMessage("Something bad happened :(");
     }
   };
 
@@ -44,24 +49,31 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className={styles.container}>
       <FunkyHeader />
-      <FeedOption updateFeedLimit={setFeedLimit} />
-      {gifs.length > 0
-        ? gifs.map((item, index) => {
-            return (
-              <GIFView
-                key={item.id}
-                url={item.images.downsized.url}
-                alt={item.title}
-                width={item.images.width}
-                height={item.images.height}
-              />
-            );
-          })
-        : ""}
-
-      <button onClick={loadMore}>Load more</button>
+      {errorMessage ? (
+        <div>{errorMessage}</div>
+      ) : (
+        <React.Fragment>
+          <FeedOption updateFeedLimit={setFeedLimit} />
+          <div className={styles.feed}>
+            {gifs.length > 0
+              ? gifs.map((item, index) => {
+                  return (
+                    <GIFView
+                      key={item.id}
+                      sourceSetMedium={item.images.downsized_medium}
+                      sourceSetLarge={item.images.downsized_large}
+                      url={item.images.downsized.url}
+                      alt={item.title}
+                    />
+                  );
+                })
+              : ""}
+          </div>
+          <button onClick={loadMore}>Load more</button>
+        </React.Fragment>
+      )}
     </div>
   );
 }

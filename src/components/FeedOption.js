@@ -1,4 +1,10 @@
 import React from "react";
+import styles from "./FeedOption.module.css";
+
+/**
+ * Feed options
+ * @param updateFeedLimit props
+ */
 
 function FeedOption(props) {
   const { updateFeedLimit } = props;
@@ -11,7 +17,7 @@ function FeedOption(props) {
   };
 
   return (
-    <div>
+    <div className={styles.buttons}>
       {numFeedOption.length > 0
         ? numFeedOption.map((opt, ind) => {
             return (
