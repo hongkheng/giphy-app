@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styles from "./GIFView.module.css";
 
 /**
@@ -22,5 +23,24 @@ function GIFView(props) {
     </picture>
   );
 }
+
+GIFView.propTypes = {
+  /**
+   * Giphy images object which source is medium sized
+   */
+  sourceSetMedium: PropTypes.object,
+  /**
+   * Giphy images object which source is large sized
+   */
+  sourceSetLarge: PropTypes.object,
+  /**
+   * Fallback image url
+   */
+  url: PropTypes.string.isRequired,
+  /**
+   * Fallback image alt description
+   */
+  alt: PropTypes.string.isRequired,
+};
 
 export default GIFView;

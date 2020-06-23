@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styles from "./FeedOption.module.css";
 
 /**
@@ -30,5 +31,13 @@ function FeedOption(props) {
     </div>
   );
 }
+
+FeedOption.propTypes = {
+  /**
+   * method to return current selected feed option to the
+   * parent component
+   */
+  updateFeedLimit: PropTypes.func.isRequired,
+};
 
 export default FeedOption;
